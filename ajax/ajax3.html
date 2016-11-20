@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>搜索提示</title>
+	<style type="text/css">
+		* {margin: 0;padding: 0;}
+		ul li {list-style-type: none;}
+		.search{width: 1000px;margin: 20px auto 0;position: relative;}
+		.search input {width: 300px;padding: 5px;}
+		.search-tips {width: 312px;position: absolute;left: 0;top: 29px;background: #fff; border: 1px solid #aaa;border-top: 0;}
+		.search-tips li {width: 314px;padding-left: 7px;height: 25px;line-height: 25px;}
+		.ps {width: 1000px;margin: 10px auto;}
+		.ps span {color: red;}
+	</style>
+</head>
+<body>
+	<p class="ps">PS:输入关键字<span>电</span>或<span>手</span>试试。</p>
+	<p class="ps">本效果实现的是<span>商品搜索提示功能</span>，由于之前简单的展示，数据内容不是来自数据库，而是预先准备好的包含少量商品名称的词库。用到的技术有js、原生ajax、php</p>
+	<div class="search">
+		<input type="text" name="" id="text">
+		<ul class="search-tips" id="tips" style="display: none;">
+		</ul>
+	</div>
+
+
+
+	<!-- <script type="text/javascript" src="../blog/js/jquery-1.12.3.js"></script> -->
+	<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+	<script type="text/javascript">
+	
+		var text = document.getElementById('text');
+		text.onkeyup = function(){
+			ajax(this.value);
+			if (!this.value){
+				tips.innerHTML = '';
+				tips.style.display = 'none';
+			}
+		}
+		var tips = document.getElementById('tips');
+		function ajax(str){
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange=function(){
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					var result = xhr.responseText;
+					if (!result) {
+						tips.style.display = 'none';
+						return;
+					}
+					var re_arr = result.split('|');
+					addLi(re_arr,tips);
+				}
+			}
+			xhr.open("GET","s_tips.php?q="+str,true);
+			xhr.send();
+		}
+		function addLi(arr,parent){
+			var b = deleteLi(parent);
+			if(b==false) {
+				parent.innerHTML = '';
+			}
+			for (var i = 0; i < arr.length; i++) {
+				var liE = document.createElement('li');
+				var li_text = document.createTextNode(arr[i]);
+				liE.appendChild(li_text);
+				parent.appendChild(liE);
+				parent.style.display = 'block';
+			}
+
+		}
+		function deleteLi(element){
+			var child = element.childNodes;
+			for (var i = 0; i < child.length; i++) {
+				if(child[i].nodeType == 1){
+					return false;
+				}
+			}
+		}
+	</script>
+</body>
+</html>
