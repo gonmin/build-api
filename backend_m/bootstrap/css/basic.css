@@ -1,0 +1,35 @@
+.main {
+	margin-top: 20px;
+}
+.user {
+	margin-right: 8px;
+  top: 3px;
+}
+.btn-modify {
+	margin-right: 3px;
+}
+.article-list .article-link {
+	
+} 
+.article-list .article-link a {
+	width: 295px;
+	overflow: hidden;
+	display: inline-block;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.article-list .action {
+	width: 114px;
+}
+.article-modify .btn-save {
+	width: 70px;
+}
+.navbar .u-icon {
+	margin-left: 5px;
+}
+.no-login a:focus {
+	outline: none;
+}
+.login-warning-info {
+	padding: 5px 0;
+}
